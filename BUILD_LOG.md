@@ -38,3 +38,14 @@
   visually inspected: real data, no empty screens. Page model self-check:
   200/200 rows recompute to the board's numbers, 0 mismatches, no page
   errors (favicon 404 fixed with a data: icon link).
+
+## 2026-11-17 ~10:55 WIB — gates verified, ready for the conductor
+- `makefun check` on HEAD b64b6c5: 4 passed (competition_open, snapshot,
+  license_osi, entrypoint), 1 failed (transcripts_present — the conductor
+  bundles transcripts), 14 skipped, 5 checked at submission (repo public,
+  owner, created after open, commit pushed, no duplicate — all satisfied).
+- All 7 sealed gate rows verified independently against out/:
+  dashboard_files, board_file, sorted_by_value, coverage (40/40),
+  farm_steps, screenshots (3 JPEGs, 1440x900, 125–157 KB), dossier_matches
+  (byte-identical rebuild, 580,828 bytes). ALL PASS.
+- NOT bundled, NOT submitted — conductor's step.
