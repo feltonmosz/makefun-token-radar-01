@@ -17,3 +17,24 @@
   with chain filter, watchlist/early toggle, model panel with the calibrated
   multiples table, detail view with full model breakdown; 3 JPEG screenshots
   at 1440x900 via headless Chrome (playwright-core in shot-tools).
+
+## 2026-11-17 ~10:50 WIB — model + dashboard built, pipeline green
+- lib/model.ts (radar-2): calibrateMultiples (median mcap/TVL per category,
+  n>=3, clamped [0.05, 1.0], CEX excluded, global fallback 0.25x n=119);
+  impliedValue = TVL x catMult x growth x maturity x breadth; 7-step farm
+  plans with per-chain gas tiers + TVL-trend step; boardIssue validates the
+  gate's board rows. main.ts written fresh, revised 2x (dashboard presence
+  check, top-3 summary line, dossier 1.5 MiB cap check).
+- Dashboard rewritten: index.html + app.css (warm paper / emerald theme) +
+  app.js (search, category + chain filters, watchlist/early scope tabs,
+  pre-token/live tabs, 5 sort keys, detail drawer with full model breakdown
+  + verbatim farm plan, model panel with calibration table, page recomputes
+  every row and exposes window.__modelCheck). Total 33,464 bytes (cap 64K).
+- Pipeline: 200 rows, 40/40 watchlist, 160 early, non-increasing implied
+  values, ranks 1..200, all farm steps 20..600 chars. Top 3: Steakhouse
+  Financial $641.9M, Gauntlet $382.3M, Veda $367.6M. Dossier 580,828 bytes.
+- Screenshots (shot-tools/radar-shots.mjs, 1440x900 JPEG q85): 1-board.jpg
+  125,365 B, 2-detail.jpg 157,432 B, 3-filtered.jpg 126,677 B. All three
+  visually inspected: real data, no empty screens. Page model self-check:
+  200/200 rows recompute to the board's numbers, 0 mismatches, no page
+  errors (favicon 404 fixed with a data: icon link).

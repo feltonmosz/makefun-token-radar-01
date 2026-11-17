@@ -71,6 +71,11 @@ function copyFiles(from: string, to: string): string[] {
 }
 
 copyFiles(join(here, 'dashboard'), join(out, 'dashboard'));
+const dashFiles = readdirSync(join(out, 'dashboard'));
+if (!dashFiles.includes('index.html') || !dashFiles.some((f) => f.endsWith('.css')) || !dashFiles.some((f) => f.endsWith('.js'))) {
+  process.stderr.write(`token radar: dashboard/ must hold index.html and at least one .css and one .js file\n`);
+  process.exit(1);
+}
 const shots = copyFiles(join(here, 'screenshots'), join(out, 'screenshots'));
 if (shots.length < 3) {
   process.stderr.write(`token radar: screenshots/ holds ${shots.length} image${shots.length === 1 ? '' : 's'}: hand in 3, the board, a detail view and a filtered view\n`);
@@ -93,5 +98,9 @@ writeFileSync(join(out, 'dossier.json'), dossier);
 
 process.stdout.write(
   `token radar: ${snapshot.protocols.length} protocols, ${snapshot.watchlist.length} on the watchlist, ${board.length} rows scored (${radar.early_size} early, ${radar.live_size} live set aside)\n` +
+    `token radar: top 3: ${board
+      .slice(0, 3)
+      .map((r) => `#${r.rank} ${r.name} ($${r.implied_value_usd.toLocaleString('en-US')})`)
+      .join(', ')}\n` +
     `token radar: wrote ${join(out, 'board.json')}, ${join(out, 'data.js')}, ${join(out, 'dashboard')} (3 files), ${join(out, 'screenshots')} (${shots.length} images) and ${join(out, 'dossier.json')} (${dossier.length} bytes)\n`,
 );
